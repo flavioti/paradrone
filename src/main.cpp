@@ -6,7 +6,7 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(4, 5); // CE, CSN on Blue Pill
+RF24 radio(4, 5);
 const uint64_t address = 0xF0F0F0F0E1LL;
 int counter = 0;
 
@@ -15,7 +15,7 @@ void setup()
     Serial.begin(115200);
     radio.begin();                  // Starting the Wireless communication
     radio.openWritingPipe(address); // Setting the address where we will send the data
-    radio.setPALevel(RF24_PA_HIGH);  // You can set it as minimum or maximum depending on the distance between the transmitter and receiver.
+    radio.setPALevel(RF24_PA_HIGH); // You can set it as minimum or maximum depending on the distance between the transmitter and receiver.
     radio.stopListening();          // This sets the module as transmitter
     pinMode(LED_BUILTIN, OUTPUT);
 }
@@ -33,7 +33,6 @@ MyData data;
 void loop()
 {
     counter++;
-    Serial.println("ko");
     data.counter = counter;
     bool result = radio.write(&data, sizeof(MyData));
     if (result)
@@ -43,7 +42,7 @@ void loop()
         digitalWrite(LED_BUILTIN, LOW);
         delay(100);
     }
-    Serial.println(result);
+    Serial.println("CONTROL:::result " + result);
 }
 
 #endif
